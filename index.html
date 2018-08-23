@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>School counter</title>
+    <style>
+      * {
+        font-family: sans-serif;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    Start of school year -
+    <select id="monthStart">
+      <option value="1">January</option>
+      <option value="2">Febuary</option>
+      <option value="3">March</option>
+      <option value="4">April</option>
+      <option value="5">May</option>
+      <option value="6">June</option>
+      <option value="7">July</option>
+      <option value="8" selected>August</option>
+      <option value="9">September</option>
+      <option value="10">October</option>
+      <option value="11">November</option>
+      <option value="12">December</option>
+    </select>
+    <input type="number" placeholder="Day" id="dayStart" value="22"><br>
+    End of school year -
+    <select id="monthEnd">
+      <option value="1">January</option>
+      <option value="2">Febuary</option>
+      <option value="3">March</option>
+      <option value="4">April</option>
+      <option value="5" selected>May</option>
+      <option value="6">June</option>
+      <option value="7">July</option>
+      <option value="8">August</option>
+      <option value="9">September</option>
+      <option value="10">October</option>
+      <option value="11">November</option>
+      <option value="12">December</option>
+    </select>
+    <input type="number" placeholder="Day" id="dayEnd" value="31"><br>
+    <script src="sketch.js"></script>
+    <p id="percent" style="position:relative; left: 43vw; text-align:left;"></p>
+  </body>
+</html>
