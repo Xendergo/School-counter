@@ -13,4 +13,4 @@ setInterval(() => {
   const dateEndMillis = dateEnd.getTime();
   const now = Date.now()-dateStartMillis;
   document.getElementById("percent").innerHTML = (now/(dateEndMillis-dateStartMillis))*100+"%";
-})
+}, 20)
