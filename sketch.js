@@ -1,10 +1,10 @@
 // const percent = document.getElementById("percent");
 
 setInterval(() => {
-  const yr1 = new Date().getFullYear();
-  const yr2 = new Date().getFullYear()+1;
   const monthStart = parseInt(document.getElementById("monthStart").value)-1;
   const dayStart = parseInt(document.getElementById("dayStart").value);
+  const yr1 = parseInt(document.getElementById("yearStart").value);
+  const yr2 = yr1+1;
   const monthEnd = parseInt(document.getElementById("monthEnd").value)-1;
   const dayEnd = parseInt(document.getElementById("dayEnd").value);
   const dateStart = new Date(yr1, monthStart, dayStart);
