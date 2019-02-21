@@ -38,7 +38,7 @@ function draw() {
     fill(palette.line());
     c = (i / points) * (cs[1] - cs[0]) + cs[0]
     let p = polarToCart([i / points * PI * 2, width * 0.35]);
-    let p2 = polarToCart([i / points * PI * 2 * multiplier, width * 0.35]);
+    let p2 = polarToCart([i / points * PI * 2 * multiplier * 2, width * 0.35]);
     stroke(palette.line());
     strokeWeight(width / (1640 / 3))
     line(p[0], p[1], p2[0], p2[1]);
