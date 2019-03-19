@@ -22,12 +22,16 @@ function draw() {
   select("#save").position(0, 0);
   const monthStart = parseInt(document.getElementById("monthStart").value)-1;
   const dayStart = parseInt(document.getElementById("dayStart").value);
+  const hourStart = parseInt(document.getElementById("hourStart").value);
+  const minuteStart = parseInt(document.getElementById("minuteStart").value);
   const yr1 = parseInt(document.getElementById("yearStart").value);
   const yr2 = parseInt(document.getElementById("yearEnd").value);
   const monthEnd = parseInt(document.getElementById("monthEnd").value)-1;
   const dayEnd = parseInt(document.getElementById("dayEnd").value);
-  const dateStart = new Date(yr1, monthStart, dayStart);
-  const dateEnd = new Date(yr2, monthEnd, dayEnd);
+  const hourEnd = parseInt(document.getElementById("hourEnd").value);
+  const minuteEnd = parseInt(document.getElementById("minuteEnd").value);
+  const dateStart = new Date(yr1, monthStart, dayStart, hourStart, minuteStart);
+  const dateEnd = new Date(yr2, monthEnd, dayEnd, hourEnd+12, minuteEnd);
   const dateStartMillis = dateStart.getTime();
   const dateEndMillis = dateEnd.getTime();
   const now = Date.now()-dateStartMillis;
