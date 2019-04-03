@@ -53,6 +53,11 @@
     <input type="number" placeholder="Year" id="yearEnd" value="2019"><br><br>
     <script src="sketch.js"></script>
     <p id="percent" style="position:relative; left: 43vw; text-align:left;"></p>
-    <button onclick="savey()" id="save">Save times table</button>
+    <div id="tableSettings" style="text-align: left;">
+      <button onclick="savey()" id="save">Save times table</button><br><br>
+      Round table inputs - <input id="roundTable" type="checkbox"><br>
+      <input type="number" value="1" id="roundValue" min=0 max=1 hidden></input>
+      <p id="multiplier"></p>
+    </div>
   </body>
 </html>
