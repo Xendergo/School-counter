@@ -19,7 +19,7 @@ function setup() {
 }
 
 function draw() {
-  select("#save").position(0, 0);
+  select("#tableSettings").position(0, 0);
   const monthStart = parseInt(document.getElementById("monthStart").value)-1;
   const dayStart = parseInt(document.getElementById("dayStart").value);
   const hourStart = parseInt(document.getElementById("hourStart").value);
@@ -35,8 +35,16 @@ function draw() {
   const dateStartMillis = dateStart.getTime();
   const dateEndMillis = dateEnd.getTime();
   const now = Date.now()-dateStartMillis;
-  multiplier = (now/(dateEndMillis-dateStartMillis))*100
+  multiplier = (now/(dateEndMillis-dateStartMillis))*100;
   document.getElementById("percent").innerHTML = multiplier+"%";
+  if (select("#roundTable").elt.checked) {
+    select("#roundValue").elt.hidden = false
+    multiplier = Math.round(multiplier/select("#roundValue").value())*select("#roundValue").value();
+  } else {
+    select("#roundValue").elt.hidden = true
+  }
+  select("#multiplier").elt.innerHTML = `x${multiplier}`
+  console.log(multiplier);
   select("#percent").elt.width = windowWidth/2;
   background(palette.background())
   translate(width / 2, height / 2.5);
@@ -63,7 +71,7 @@ function polarToCart(v) {
 function savey() {
   let temp = cnv.position();
   console.log(temp)
-  resizeCanvas(windowWidth, windowHeight);
+  resizeCanvas(windowWidth, windowWidth);
   cnv.position(0, 0);
   background(palette.background())
   translate(-width / 2, -height / 2.5);
