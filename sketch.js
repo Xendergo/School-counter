@@ -71,7 +71,7 @@ function polarToCart(v) {
 function savey() {
   let temp = cnv.position();
   console.log(temp)
-  resizeCanvas(windowWidth, windowWidth);
+  resizeCanvas(windowWidth, windowHeight);
   cnv.position(0, 0);
   background(palette.background())
   translate(-width / 2, -height / 2.5);
@@ -80,13 +80,13 @@ function savey() {
   for (let i = 0; i < points; i++) {
     fill(palette.line());
     c = (i / points) * (cs[1] - cs[0]) + cs[0]
-    let p = polarToCart([i / points * PI * 2, width*0.3]);
-    let p2 = polarToCart([i / points * PI * 2 * multiplier, width*0.3]);
+    let p = polarToCart([i / points * PI * 2, height*0.45]);
+    let p2 = polarToCart([i / points * PI * 2 * multiplier, height*0.45]);
     stroke(palette.line());
-    strokeWeight(width / (1640 / 3))
+    strokeWeight(height / (1640 / 2.5))
     line(p[0], p[1], p2[0], p2[1]);
     noStroke()
-    ellipse(p[0], p[1], width / 256, height / 256);
+    ellipse(p[0], p[1], height / 256, height / 256);
   }
   saveCanvas(cnv, `x${multiplier}`, "png")
   translate(-width/2, -height/2);
