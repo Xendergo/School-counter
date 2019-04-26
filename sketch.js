@@ -45,6 +45,7 @@ function draw() {
     notify(`School is ${Math.floor(multiplier)}% over!`)
   }
   pm = multiplier;
+  document.getElementById("title").innerHTML = "School counter | "+Math.round(multiplier*10000)/10000+"%"
   document.getElementById("percent").innerHTML = multiplier+"%";
   if (select("#roundTable").elt.checked) {
     select("#roundValue").elt.hidden = false
