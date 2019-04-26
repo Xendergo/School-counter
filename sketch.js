@@ -1,9 +1,13 @@
+if (("Notification" in window) && Notification.permission == "default") {
+  Notification.requestPermission()
+}
+
 const palette = {
   line: () => {
     return color(c, 100, 100)
   },
   background: () => {
-    return color(0, 0, 100);
+    return color(0, 0, 100, 0);
   }
 }
 let points = 200;
@@ -11,6 +15,7 @@ let multiplier = 0;
 let cs = [125, 276];
 let c = cs[0];
 let cnv;
+let pm = 0;
 
 function setup() {
   colorMode(HSB)
@@ -36,6 +41,10 @@ function draw() {
   const dateEndMillis = dateEnd.getTime();
   const now = Date.now()-dateStartMillis;
   multiplier = (now/(dateEndMillis-dateStartMillis))*100;
+  if (Math.floor(pm) !== Math.floor(multiplier) && pm !== 0) {
+    notify(`School is ${Math.floor(multiplier)}% over!`)
+  }
+  pm = multiplier;
   document.getElementById("percent").innerHTML = multiplier+"%";
   if (select("#roundTable").elt.checked) {
     select("#roundValue").elt.hidden = false
@@ -44,9 +53,10 @@ function draw() {
     select("#roundValue").elt.hidden = true
   }
   select("#multiplier").elt.innerHTML = `x${multiplier}`
-  console.log(multiplier);
+  // console.log(multiplier);
   select("#percent").elt.width = windowWidth/2;
-  background(palette.background())
+  // background(palette.background())
+  clear()
   translate(width / 2, height / 2.5);
   textSize(width / (410 / 11));
   for (let i = 0; i < points; i++) {
@@ -60,8 +70,14 @@ function draw() {
     noStroke()
     ellipse(p[0], p[1], width / 256, height / 256);
   }
+  if (frameCount % 600 == 0) {
+    let link = document.getElementById("favicon")
+    link.type = 'image/x-icon';
+    link.rel = 'shortcut icon';
+    link.href = canvas.toDataURL("image/x-icon");
+  }
   cs[1] = sin(multiplier*50) * 100 + 200;
-  cs[0] = cs[1] - 100
+  cs[0] = cs[1] - 100;
 }
 
 function polarToCart(v) {
@@ -70,7 +86,7 @@ function polarToCart(v) {
 
 function savey() {
   let temp = cnv.position();
-  console.log(temp)
+  // console.log(temp)
   resizeCanvas(windowWidth, windowHeight);
   cnv.position(0, 0);
   background(palette.background())
@@ -94,3 +110,15 @@ function savey() {
   resizeCanvas(windowHeight, windowHeight);
   cnv.position(temp.x, temp.y)
 }
+
+function notify(msg) {
+  if (Notification.permission == "granted") {
+    new Notification(msg)
+  } else {
+    console.log(Notification.permission)
+  }
+}
+
+setInterval(() => {
+
+}, 10000)
