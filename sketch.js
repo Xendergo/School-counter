@@ -2,6 +2,10 @@ if (("Notification" in window) && Notification.permission == "default") {
   Notification.requestPermission()
 }
 
+const monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
+
 const palette = {
   line: () => {
     return color(c, 100, 100)
@@ -41,6 +45,13 @@ function draw() {
   const dateEndMillis = dateEnd.getTime();
   const now = Date.now()-dateStartMillis;
   multiplier = (now/(dateEndMillis-dateStartMillis))*100;
+  let nextPercentagePoint = new Date((dateEndMillis-dateStartMillis)*(Math.ceil(multiplier)/100)+dateStartMillis);
+  let morning = "AM"
+  if (nextPercentagePoint.getHours() > 12) {
+    morning = "PM"
+  }
+  document.getElementById("nextPercentagePoint").innerHTML = `${Math.ceil(multiplier)}% happening at: ${nextPercentagePoint.getHours()%12}:${nextPercentagePoint.getMinutes()} ${morning}, ${monthNames[nextPercentagePoint.getMonth()]} ${nextPercentagePoint.getUTCDate()} `;
+  console.log(nextPercentagePoint)
   if (Math.floor(pm) !== Math.floor(multiplier) && pm !== 0) {
     notify(`School is ${Math.floor(multiplier)}% over!`)
   }
