@@ -20,6 +20,7 @@ let cs = [125, 276];
 let c = cs[0];
 let cnv;
 let pm = 0;
+const mod = (x, n) => (x % n + n) % n
 
 function setup() {
   colorMode(HSB)
@@ -57,8 +58,7 @@ function draw() {
   if (nextPercentagePoint.getHours() > 12) {
     morning = "PM"
   }
-  document.getElementById("nextPercentagePoint").innerHTML = `${Math.ceil(multiplier)}% happening at: ${nextPercentagePoint.getHours()%12}:${nextPercentagePoint.getMinutes()} ${morning}, ${monthNames[nextPercentagePoint.getMonth()]} ${nextPercentagePoint.getUTCDate()} `;
-  console.log(nextPercentagePoint)
+  document.getElementById("nextPercentagePoint").innerHTML = `${Math.ceil(multiplier)}% happening at: ${Math.round(mod((nextPercentagePoint.getHours()-0.1), 12))}:${("0" + nextPercentagePoint.getMinutes()).slice(-2)} ${morning}, ${monthNames[nextPercentagePoint.getMonth()]} ${nextPercentagePoint.getUTCDate()} `;
   multiplier = (now / (dateEndMillis - dateStartMillis)) * 100;
   if (Math.floor(pm) !== Math.floor(multiplier) && pm !== 0) {
     notify(`School is ${Math.floor(multiplier)}% over!`)
