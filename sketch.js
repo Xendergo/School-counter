@@ -53,12 +53,13 @@ function draw() {
   const dateEndMillis = dateEnd.getTime();
   const now = Date.now()-dateStartMillis;
   multiplier = (now/(dateEndMillis-dateStartMillis))*100;
-  let nextPercentagePoint = new Date((dateEndMillis-dateStartMillis)*(Math.ceil(multiplier)/100)+dateStartMillis);
+  let point = document.getElementById("point");
+  let nextPercentagePoint = new Date((dateEndMillis-dateStartMillis)*(point.value/100)+dateStartMillis);
   let morning = "AM"
   if (nextPercentagePoint.getHours() > 12) {
     morning = "PM"
   }
-  document.getElementById("nextPercentagePoint").innerHTML = `${Math.ceil(multiplier)}% happening at: ${Math.round(mod((nextPercentagePoint.getHours()-0.1), 12))}:${("0" + nextPercentagePoint.getMinutes()).slice(-2)} ${morning}, ${monthNames[nextPercentagePoint.getMonth()]} ${nextPercentagePoint.getUTCDate()} `;
+  document.getElementById("nextPercentagePoint").innerHTML = `% happening at: ${Math.round(mod((nextPercentagePoint.getHours()-0.1), 12))}:${("0" + nextPercentagePoint.getMinutes()).slice(-2)} ${morning}, ${monthNames[nextPercentagePoint.getMonth()]} ${nextPercentagePoint.getUTCDate()} `;
   multiplier = (now / (dateEndMillis - dateStartMillis)) * 100;
   if (Math.floor(pm) !== Math.floor(multiplier) && pm !== 0) {
     notify(`School is ${Math.floor(multiplier)}% over!`)
