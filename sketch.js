@@ -1,4 +1,4 @@
-if (("Notification" in window) && Notification.permission == "default") {
+if (("Notification" in window) && Notification.permission != "granted") {
   Notification.requestPermission()
 }
 
@@ -55,14 +55,16 @@ function draw() {
   multiplier = (now/(dateEndMillis-dateStartMillis))*100;
   let point = document.getElementById("point");
   let nextPercentagePoint = new Date((dateEndMillis-dateStartMillis)*(point.value/100)+dateStartMillis);
+  let notifyMod = document.getElementById("notify").value;
   let morning = "AM"
   if (nextPercentagePoint.getHours() > 12) {
     morning = "PM"
   }
   document.getElementById("nextPercentagePoint").innerHTML = `% happening at: ${Math.round(mod((nextPercentagePoint.getHours()-0.1), 12))}:${("0" + nextPercentagePoint.getMinutes()).slice(-2)} ${morning}, ${monthNames[nextPercentagePoint.getMonth()]} ${nextPercentagePoint.getUTCDate()} `;
   multiplier = (now / (dateEndMillis - dateStartMillis)) * 100;
-  if (Math.floor(pm) !== Math.floor(multiplier) && pm !== 0) {
-    notify(`School is ${Math.floor(multiplier)}% over!`)
+  if (Math.floor(pm/notifyMod)*notifyMod !== Math.floor(multiplier/notifyMod)*notifyMod && pm !== 0) {
+    notify(`School is ${Math.floor(multiplier*10000)/10000}% over!`);
+    console.log("Notify")
   }
   document.getElementById("title").innerHTML = "School counter | " + Math.round(multiplier * 100000) / 100000 + "%"
   document.getElementById("percent").innerHTML = multiplier + "%";
@@ -95,6 +97,7 @@ function draw() {
   if (millis() < 1000) {
     setFavicon()
   }
+  pm = multiplier;
 }
 
 function polarToCart(v) {
