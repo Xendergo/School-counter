@@ -66,6 +66,7 @@ function draw() {
     notify(`School is ${Math.floor(multiplier*10000)/10000}% over!`);
     console.log("Notify")
   }
+  pm = multiplier;
   document.getElementById("title").innerHTML = "School counter | " + Math.round(multiplier * 100000) / 100000 + "%"
   document.getElementById("percent").innerHTML = multiplier + "%";
   if (select("#roundTable").elt.checked) {
@@ -97,7 +98,6 @@ function draw() {
   if (millis() < 1000) {
     setFavicon()
   }
-  pm = multiplier;
 }
 
 function polarToCart(v) {
