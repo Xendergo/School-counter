@@ -37,24 +37,24 @@ const setFavicon = () => {
 
 function draw() {
   select("#tableSettings").position(0, 0);
-  const monthStart = parseInt(document.getElementById("monthStart").value) - 1;
-  const dayStart = parseInt(document.getElementById("dayStart").value);
-  const hourStart = parseInt(document.getElementById("hourStart").value);
-  const minuteStart = parseInt(document.getElementById("minuteStart").value);
-  const yr1 = parseInt(document.getElementById("yearStart").value);
-  const yr2 = parseInt(document.getElementById("yearEnd").value);
-  const monthEnd = parseInt(document.getElementById("monthEnd").value) - 1;
-  const dayEnd = parseInt(document.getElementById("dayEnd").value);
-  const hourEnd = parseInt(document.getElementById("hourEnd").value);
-  const minuteEnd = parseInt(document.getElementById("minuteEnd").value);
+  const monthStart = getNumValue("monthStart") - 1;
+  const dayStart = getNumValue("dayStart");
+  const hourStart = getNumValue("hourStart");
+  const minuteStart = getNumValue("minuteStart");
+  const yr1 = getNumValue("yearStart");
+  const yr2 = getNumValue("yearEnd");
+  const monthEnd = getNumValue("monthEnd") - 1;
+  const dayEnd = getNumValue("dayEnd");
+  const hourEnd = getNumValue("hourEnd");
+  const minuteEnd = getNumValue("minuteEnd");
   const dateStart = new Date(yr1, monthStart, dayStart, hourStart, minuteStart);
-  const dateEnd = new Date(yr2, monthEnd, dayEnd, hourEnd + 12, minuteEnd);
+  const dateEnd = new Date(yr2, monthEnd, dayEnd, hourEnd, minuteEnd);
   const dateStartMillis = dateStart.getTime();
   const dateEndMillis = dateEnd.getTime();
-  const now = Date.now()-dateStartMillis;
-  multiplier = (now/(dateEndMillis-dateStartMillis))*100;
+  const now = Date.now() - dateStartMillis;
+  multiplier = (now / (dateEndMillis - dateStartMillis)) * 100;
   let point = document.getElementById("point");
-  let nextPercentagePoint = new Date((dateEndMillis-dateStartMillis)*(point.value/100)+dateStartMillis);
+  let nextPercentagePoint = new Date((dateEndMillis - dateStartMillis) * (point.value / 100) + dateStartMillis);
   let notifyMod = document.getElementById("notify").value;
   let morning = "AM"
   if (nextPercentagePoint.getHours() > 12) {
@@ -62,7 +62,7 @@ function draw() {
   }
   document.getElementById("nextPercentagePoint").innerHTML = `% happening at: ${Math.round(mod((nextPercentagePoint.getHours()-0.1), 12))}:${("0" + nextPercentagePoint.getMinutes()).slice(-2)} ${morning}, ${monthNames[nextPercentagePoint.getMonth()]} ${nextPercentagePoint.getUTCDate()} `;
   multiplier = (now / (dateEndMillis - dateStartMillis)) * 100;
-  if (Math.floor(pm/notifyMod)*notifyMod !== Math.floor(multiplier/notifyMod)*notifyMod && pm !== 0) {
+  if (Math.floor(pm / notifyMod) * notifyMod !== Math.floor(multiplier / notifyMod) * notifyMod && pm !== 0) {
     notify(`School is ${Math.floor(multiplier*10000)/10000}% over!`);
     console.log("Notify")
   }
@@ -136,6 +136,16 @@ function notify(msg) {
     new Notification(msg)
   } else {
     console.log(Notification.permission)
+  }
+}
+
+function getNumValue(id) {
+  let v = parseInt(document.getElementById(id).value);
+
+  if (isNaN(v)) {
+    return 0;
+  } else {
+    return v;
   }
 }
 

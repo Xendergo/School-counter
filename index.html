@@ -1,74 +1,83 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title id="title">School counter</title>
-    <script src="p5.js"></script>
-    <script src="p5.dom.js"></script>
-    <style>
-      * {
-        font-family: sans-serif;
-        text-align: center;
-      }
 
-      .point {
-        width: 8ch;
-      }
+<head>
+  <title id="title">School counter</title>
+  <script src="p5.js"></script>
+  <script src="p5.dom.js"></script>
+  <style>
+    * {
+      font-family: sans-serif;
+      text-align: center;
+    }
 
-      .align {
-        text-align: left;
-      }
-    </style>
-    <meta charset="utf-8">
-    <link rel="shortcut icon" type="image/png" href="/favicon.png" id="favicon"/>
-  </head>
-  <body style="overflow: hidden;">
-    Start of school year -
-    <select id="monthStart">
-      <option value="1">January</option>
-      <option value="2">Febuary</option>
-      <option value="3">March</option>
-      <option value="4">April</option>
-      <option value="5">May</option>
-      <option value="6">June</option>
-      <option value="7">July</option>
-      <option value="8" selected>August</option>
-      <option value="9">September</option>
-      <option value="10">October</option>
-      <option value="11">November</option>
-      <option value="12">December</option>
-    </select>
-    <input type="number" placeholder="Day" id="dayStart" value="22">
-    <input type="number" placeholder="Hour" id="hourStart" value="6">
-    <input type="number" placeholder="Minute" id="minuteStart" value="58">
-    <input type="number" placeholder="Year" id="yearStart" value="2018"><br><br>
-    End of school year -
-    <select id="monthEnd">
-      <option value="1">January</option>
-      <option value="2">Febuary</option>
-      <option value="3">March</option>
-      <option value="4">April</option>
-      <option value="5">May</option>
-      <option value="6" selected>June</option>
-      <option value="7">July</option>
-      <option value="8">August</option>
-      <option value="9">September</option>
-      <option value="10">October</option>
-      <option value="11">November</option>
-      <option value="12">December</option>
-    </select>
-    <input type="number" placeholder="Day" id="dayEnd" value="4">
-    <input type="number" placeholder="Hour" id="hourEnd" value="-1">
-    <input type="number" placeholder="Minute" id="minuteEnd" value="4">
-    <input type="number" placeholder="Year" id="yearEnd" value="2019"><br><br>
-    <script src="sketch.js"></script>
-    <p id="percent" style="position:relative; left: 43vw; text-align:left;"></p>
-    <div id="tableSettings" class="align">
-      <button onclick="savey()" id="save">Save times table</button><br><br>
-      <p class="align">Round table inputs - <input id="roundTable" type="checkbox"></p>
-      <input type="number" value="1" id="roundValue" class="point" step="0.01" hidden></input>
-      <p id="multiplier" class="align"></p><br><br>
-      <p><input class="point" id="point" type="number" step="0.001" min="0" max="100"></input><span id="nextPercentagePoint"></span></p><br>
-      <p class="align">Notify every <input id="notify" class="point" type="number" min="0.001" max="100" step="0.001" value="1"></input>%</p>
-    </div>
-  </body>
+    .point {
+      width: 8ch;
+    }
+
+    .align {
+      text-align: left;
+    }
+
+    #tableSettings {
+      margin: 8px;
+    }
+  </style>
+  <meta charset="utf-8">
+  <link rel="shortcut icon" type="image/png" href="/favicon.png" id="favicon" />
+</head>
+
+<body style="overflow: hidden;">
+  Start of school year -
+  <select id="monthStart">
+    <option value="1">January</option>
+    <option value="2">Febuary</option>
+    <option value="3">March</option>
+    <option value="4">April</option>
+    <option value="5">May</option>
+    <option value="6">June</option>
+    <option value="7">July</option>
+    <option value="8" selected>August</option>
+    <option value="9">September</option>
+    <option value="10">October</option>
+    <option value="11">November</option>
+    <option value="12">December</option>
+  </select>
+  <input type="number" placeholder="Day" id="dayStart" value="22">
+  <input type="number" placeholder="Hour" id="hourStart" value="6">
+  <input type="number" placeholder="Minute" id="minuteStart" value="58">
+  <input type="number" placeholder="Year" id="yearStart" value="2019"><br><br>
+  End of school year -
+  <select id="monthEnd">
+    <option value="1">January</option>
+    <option value="2">Febuary</option>
+    <option value="3">March</option>
+    <option value="4">April</option>
+    <option value="5">May</option>
+    <option value="6" selected>June</option>
+    <option value="7">July</option>
+    <option value="8">August</option>
+    <option value="9">September</option>
+    <option value="10">October</option>
+    <option value="11">November</option>
+    <option value="12">December</option>
+  </select>
+  <input type="number" placeholder="Day" id="dayEnd" value="4">
+  <input type="number" placeholder="Hour" id="hourEnd" value="11">
+  <input type="number" placeholder="Minute" id="minuteEnd" value="4">
+  <input type="number" placeholder="Year" id="yearEnd" value="2020"><br><br>
+  <script src="sketch.js"></script>
+  <p id="percent" style="position:relative; left: 43vw; text-align:left;"></p>
+  <div id="tableSettings" class="align">
+    <button onclick="savey()" id="save">Save times table</button><br><br>
+    <p class="align">Round table inputs - <input id="roundTable" type="checkbox"></p>
+    <input type="number" value="1" id="roundValue" class="point" step="0.01" hidden></input>
+    <p id="multiplier" class="align"></p><br><br>
+    <p><input class="point" id="point" type="number" step="0.001" min="0" max="100"></input><span
+        id="nextPercentagePoint"></span></p><br>
+    <p class="align">Notify every <input id="notify" class="point" type="number" min="0.05" max="100" step="0.05"
+        value="1"></input>%</p>
+  </div>
+</body>
+
 </html>
