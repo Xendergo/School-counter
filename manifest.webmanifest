@@ -4,7 +4,7 @@
     "description": "Calculates the percentage of school that's passed, and generates a nice graphic representation of it",
     "start_url": "./index.html",
     "display": "fullscreen",
-    "icon": [
+    "icons": [
         {
             "src": "icon.png",
             "type": "image/png"
