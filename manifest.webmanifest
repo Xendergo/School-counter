@@ -6,8 +6,8 @@
     "display": "fullscreen",
     "icon": [
         {
-            "src": "icon.svg",
-            "type": "image/svg"
+            "src": "icon.ong",
+            "type": "image/png"
         }
     ],
     "theme_color": "#c1272d",
