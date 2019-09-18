@@ -1,0 +1,15 @@
+{
+    "name": "School Counter",
+    "short_name": "School Counter",
+    "description": "Calculates the percentage of school that's passed, and generates a nice graphic representation of it",
+    "start_url": "./index.html",
+    "display": "fullscreen",
+    "icon": [
+        {
+            "src": "icon.svg",
+            "type": "image/svg"
+        }
+    ],
+    "theme_color": "#c1272d",
+    "background_color": "#c1272d"
+}
