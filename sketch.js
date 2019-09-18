@@ -20,19 +20,22 @@ let cs = [125, 276];
 let c = cs[0];
 let cnv;
 let pm = 0;
-const mod = (x, n) => (x % n + n) % n
+const mod = (x, n) => (x % n + n) % n;
+let updater;
+let dateStartMillis, dateEndMillis;
 
 function setup() {
   colorMode(HSB)
   cnv = createCanvas(windowHeight, windowHeight);
-  textFont("Ubuntu")
-}
-
-const setFavicon = () => {
-  let link = document.getElementById("favicon")
-  link.type = 'image/x-icon';
-  link.rel = 'shortcut icon';
-  link.href = canvas.toDataURL("image/x-icon");
+  textFont("Ubuntu");
+  updater = new Worker("./updater.js");
+  updater.onmessage = function (e) {
+    if (e.data == "Set Favicon") {
+      setFavicon()
+    } else {
+      document.getElementById("title").innerHTML = "School counter | " + e.data + "%"
+    }
+  }
 }
 
 function draw() {
@@ -49,8 +52,9 @@ function draw() {
   const minuteEnd = getNumValue("minuteEnd");
   const dateStart = new Date(yr1, monthStart, dayStart, hourStart, minuteStart);
   const dateEnd = new Date(yr2, monthEnd, dayEnd, hourEnd, minuteEnd);
-  const dateStartMillis = dateStart.getTime();
-  const dateEndMillis = dateEnd.getTime();
+  dateStartMillis = dateStart.getTime();
+  dateEndMillis = dateEnd.getTime();
+
   const now = Date.now() - dateStartMillis;
   multiplier = (now / (dateEndMillis - dateStartMillis)) * 100;
   let point = document.getElementById("point");
@@ -60,14 +64,13 @@ function draw() {
   if (nextPercentagePoint.getHours() > 12) {
     morning = "PM"
   }
-  document.getElementById("nextPercentagePoint").innerHTML = `% happening at: ${Math.round(mod((nextPercentagePoint.getHours()-0.1), 12))}:${("0" + nextPercentagePoint.getMinutes()).slice(-2)} ${morning}, ${monthNames[nextPercentagePoint.getMonth()]} ${nextPercentagePoint.getUTCDate()} `;
+  document.getElementById("nextPercentagePoint").innerHTML = `% happening at: ${Math.round(mod((nextPercentagePoint.getHours() - 0.1), 12))}:${("0" + nextPercentagePoint.getMinutes()).slice(-2)} ${morning}, ${monthNames[nextPercentagePoint.getMonth()]} ${nextPercentagePoint.getUTCDate()} `;
   multiplier = (now / (dateEndMillis - dateStartMillis)) * 100;
   if (Math.floor(pm / notifyMod) * notifyMod !== Math.floor(multiplier / notifyMod) * notifyMod && pm !== 0) {
-    notify(`School is ${Math.floor(multiplier*10000)/10000}% over!`);
+    notify(`School is ${Math.floor(multiplier * 10000) / 10000}% over!`);
     console.log("Notify")
   }
   pm = multiplier;
-  document.getElementById("title").innerHTML = "School counter | " + Math.round(multiplier * 100000) / 100000 + "%"
   document.getElementById("percent").innerHTML = multiplier + "%";
   if (select("#roundTable").elt.checked) {
     select("#roundValue").elt.hidden = false
@@ -139,6 +142,10 @@ function notify(msg) {
   }
 }
 
+setInterval(() => {
+  updater.postMessage([dateStartMillis, dateEndMillis]);
+}, 3000)
+
 function getNumValue(id) {
   let v = parseInt(document.getElementById(id).value);
 
@@ -149,4 +156,9 @@ function getNumValue(id) {
   }
 }
 
-setInterval(setFavicon, 10000)
+const setFavicon = () => {
+  let link = document.getElementById("favicon");
+  link.type = 'image/x-icon';
+  link.rel = 'shortcut icon';
+  link.href = canvas.toDataURL("image/x-icon");
+}
