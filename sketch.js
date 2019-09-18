@@ -2,6 +2,14 @@ if (("Notification" in window) && Notification.permission != "granted") {
   Notification.requestPermission()
 }
 
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker
+    .register('/pwa-examples/a2hs/sw.js')
+    .then(function () {
+      console.log('Service Worker Registered');
+    });
+} // Also borrowed from MDN
+
 const monthNames = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
 ];
