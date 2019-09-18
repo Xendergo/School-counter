@@ -36,7 +36,6 @@ function setup() {
       document.getElementById("title").innerHTML = "School counter | " + e.data + "%"
     }
   }
-  noLoop();
 }
 
 function draw() {
