@@ -6,7 +6,7 @@
     "display": "fullscreen",
     "icon": [
         {
-            "src": "icon.ong",
+            "src": "icon.png",
             "type": "image/png"
         }
     ],
