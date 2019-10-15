@@ -1,7 +1,6 @@
 if (("Notification" in window) && Notification.permission != "granted") {
   Notification.requestPermission()
 }
-
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker
     .register('./sw.js')
@@ -58,6 +57,7 @@ function draw() {
   const dayEnd = getNumValue("dayEnd");
   const hourEnd = getNumValue("hourEnd");
   const minuteEnd = getNumValue("minuteEnd");
+  const preview = document.getElementById("preview").checked;
   const dateStart = new Date(yr1, monthStart, dayStart, hourStart, minuteStart);
   const dateEnd = new Date(yr2, monthEnd, dayEnd, hourEnd, minuteEnd);
   dateStartMillis = dateStart.getTime();
@@ -90,6 +90,11 @@ function draw() {
   // console.log(multiplier);
   select("#percent").elt.width = windowWidth / 2;
   // background(palette.background())
+
+  if (document.getElementById("preview").checked) {
+    multiplier = getNumValue("point");
+  }
+
   clear()
   translate(width / 2, height / 2.5);
   textSize(width / (410 / 11));
