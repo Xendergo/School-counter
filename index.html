@@ -23,6 +23,15 @@
     #tableSettings {
       margin: 8px;
     }
+
+    #measure {
+      position: absolute;
+      text-align: right;
+      right: 8px;
+      top: 0;
+      padding-top: 8px;
+      z-index: 0;
+    }
   </style>
   <meta charset="utf-8">
   <link rel="shortcut icon" type="image/png" href="/favicon.png" id="favicon" />
@@ -89,6 +98,12 @@
     Preview - <input type="checkbox" id="preview"><br><br>
     <p class="align">Notify every <input id="notify" class="point" type="number" min="0.05" max="100" step="0.05"
         value="1"></input>%</p>
+  </div>
+  <div id="measure">
+    Time to measure:<br>
+    <input type="radio" name="measure" value="year" id="yearCheck" checked> <label for="yearCheck">Year</label><br>
+    <input type="radio" name="measure" value="week" id="weekCheck"> <label for="weekCheck">Week</label><br>
+    <input type="radio" name="measure" value="day" id="dayCheck"> <label for="dayCheck">Day</label>
   </div>
 </body>
 

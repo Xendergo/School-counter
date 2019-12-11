@@ -30,6 +30,9 @@ let pm = 0;
 const mod = (x, n) => (x % n + n) % n;
 let updater;
 let dateStartMillis, dateEndMillis;
+let measurement;
+let radios = document.getElementsByName("measure");
+let date = new Date()
 
 function setup() {
   colorMode(HSB)
@@ -43,9 +46,21 @@ function setup() {
       document.getElementById("title").innerHTML = "School counter | " + e.data + "%"
     }
   }
+
+  for (let i = 0; i < radios.length; i++) {
+    if (radios[i].checked) {
+      measurement = radios[i].value;
+    }
+  }
 }
 
 function draw() {
+  for (let i = 0; i < radios.length; i++) {
+    if (radios[i].checked) {
+      measurement = radios[i].value;
+    }
+  }
+
   select("#tableSettings").position(0, 0);
   const monthStart = getNumValue("monthStart") - 1;
   const dayStart = getNumValue("dayStart");
@@ -58,8 +73,18 @@ function draw() {
   const hourEnd = getNumValue("hourEnd");
   const minuteEnd = getNumValue("minuteEnd");
   const preview = document.getElementById("preview").checked;
-  const dateStart = new Date(yr1, monthStart, dayStart, hourStart, minuteStart);
-  const dateEnd = new Date(yr2, monthEnd, dayEnd, hourEnd, minuteEnd);
+  let dateStart;
+  let dateEnd;
+  if (measurement == "year") {
+    dateStart = new Date(yr1, monthStart, dayStart, hourStart, minuteStart);
+    dateEnd = new Date(yr2, monthEnd, dayEnd, hourEnd, minuteEnd);
+  } else if (measurement == "week") {
+    dateStart = new Date(date.getFullYear(), date.getMonth(), date.getDate() - (date.getDay() - 1), hourStart, minuteStart);
+    dateEnd = new Date(date.getFullYear(), date.getMonth(), date.getDate() + (6 - date.getDay() - 1), hourEnd, minuteEnd);
+  } else {
+    dateStart = new Date(date.getFullYear(), date.getMonth(), date.getDate(), hourStart, minuteStart);
+    dateEnd = new Date(date.getFullYear(), date.getMonth(), date.getDate(), hourEnd, minuteEnd);
+  }
   dateStartMillis = dateStart.getTime();
   dateEndMillis = dateEnd.getTime();
 
@@ -175,3 +200,7 @@ const setFavicon = () => {
   link.rel = 'shortcut icon';
   link.href = canvas.toDataURL("image/x-icon");
 }
+
+Number.prototype.mod = function (n) {
+  return ((this % n) + n) % n;
+};
