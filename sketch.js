@@ -116,7 +116,7 @@ function draw() {
   select("#percent").elt.width = windowWidth / 2;
   // background(palette.background())
 
-  if (document.getElementById("preview").checked) {
+  if (preview) {
     multiplier = getNumValue("point");
   }
 
@@ -185,7 +185,7 @@ setInterval(() => {
 }, 3000)
 
 function getNumValue(id) {
-  let v = parseInt(document.getElementById(id).value);
+  let v = parseFloat(document.getElementById(id).value);
 
   if (isNaN(v)) {
     return 0;
