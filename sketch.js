@@ -184,6 +184,12 @@ setInterval(() => {
   updater.postMessage([dateStartMillis, dateEndMillis]);
 }, 3000)
 
+setInterval(() => {
+  if ((new Date()).getDate() !== date.getDate()) {
+    date = new Date();
+  }
+}, 60000);
+
 function getNumValue(id) {
   let v = parseFloat(document.getElementById(id).value);
 
