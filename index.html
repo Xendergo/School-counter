@@ -3,36 +3,8 @@
 
 <head>
   <title id="title">School counter</title>
-  <script src="p5.js"></script>
-  <script src="p5.dom.js"></script>
   <link rel="manifest" href="manifest.webmanifest">
-  <style>
-    * {
-      font-family: sans-serif;
-      text-align: center;
-    }
-
-    .point {
-      width: 8ch;
-    }
-
-    .align {
-      text-align: left;
-    }
-
-    #tableSettings {
-      margin: 8px;
-    }
-
-    #measure {
-      position: absolute;
-      text-align: right;
-      right: 8px;
-      top: 0;
-      padding-top: 8px;
-      z-index: 0;
-    }
-  </style>
+  <link href="style.css" rel="stylesheet" type="text/css">
   <meta charset="utf-8">
   <link rel="shortcut icon" type="image/png" href="/favicon.png" id="favicon" />
   <!-- Global site tag (gtag.js) - Google Analytics
@@ -65,7 +37,7 @@
   </select>
   <input type="number" placeholder="Day" id="dayStart" value="20">
   <input type="number" placeholder="Hour" id="hourStart" value="6">
-  <input type="number" placeholder="Minute" id="minuteStart" value="58">
+  <input type="number" placeholder="Minute" id="minuteStart" value="45">
   <input type="number" placeholder="Year" id="yearStart" value="2019"><br><br>
   End of school year -
   <select id="monthEnd">
@@ -83,10 +55,9 @@
     <option value="12">December</option>
   </select>
   <input type="number" placeholder="Day" id="dayEnd" value="30">
-  <input type="number" placeholder="Hour" id="hourEnd" value="11">
-  <input type="number" placeholder="Minute" id="minuteEnd" value="4">
+  <input type="number" placeholder="Hour" id="hourEnd" value="23">
+  <input type="number" placeholder="Minute" id="minuteEnd" value="59">
   <input type="number" placeholder="Year" id="yearEnd" value="2020"><br><br>
-  <script src="sketch.js"></script>
   <p id="percent" style="position:relative; left: 43vw; text-align:left;"></p>
   <div id="tableSettings" class="align">
     <button onclick="savey()" id="save">Save times table</button><br><br>
@@ -105,6 +76,10 @@
     <input type="radio" name="measure" value="week" id="weekCheck"> <label for="weekCheck">Week</label><br>
     <input type="radio" name="measure" value="day" id="dayCheck"> <label for="dayCheck">Day</label>
   </div>
+  <canvas id="c"></canvas>
+  <a id="downloadLink" hidden></a>
+
+  <script src="sketch.js"></script>
 </body>
 
 </html>

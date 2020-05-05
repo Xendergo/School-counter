@@ -1,0 +1,28 @@
+* {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.point {
+  width: 8ch;
+}
+
+.align {
+  text-align: left;
+}
+
+#tableSettings {
+  margin: 8px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#measure {
+  position: absolute;
+  text-align: right;
+  right: 8px;
+  top: 0;
+  padding-top: 8px;
+  z-index: 0;
+}
