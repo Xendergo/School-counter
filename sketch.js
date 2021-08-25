@@ -36,6 +36,7 @@ let dateStartMillis, dateEndMillis;
 let measurement;
 let radios = document.getElementsByName("measure");
 let date = new Date()
+let base;
 
 function setup() {
   c.width = window.innerHeight * 0.85;
@@ -66,6 +67,8 @@ function drawLoop() {
     }
   }
 
+  base = parseInt(document.getElementById("base").value)
+
   const monthStart = getNumValue("monthStart") - 1;
   const dayStart = getNumValue("dayStart");
   const hourStart = getNumValue("hourStart");
@@ -94,10 +97,10 @@ function drawLoop() {
   dateEndMillis = dateEnd.getTime();
 
   const now = Date.now() - dateStartMillis;
-  multiplier = (now / (dateEndMillis - dateStartMillis)) * 100;
-  let point = document.getElementById("point");
-  let nextPercentagePoint = new Date((dateEndMillis - dateStartMillis) * (point.value / 100) + dateStartMillis);
-  let notifyMod = document.getElementById("notify").value;
+  multiplier = (now / (dateEndMillis - dateStartMillis)) * base ** 2;
+  let point = getNumValue("point", base);
+  let nextPercentagePoint = new Date((dateEndMillis - dateStartMillis) * (point / base ** 2) + dateStartMillis);
+  let notifyMod = getNumValue("notify", base);
   let morning = "AM"
   if (nextPercentagePoint.getHours() > 12) {
     morning = "PM"
@@ -105,26 +108,26 @@ function drawLoop() {
 
 
   document.getElementById("nextPercentagePoint").innerHTML = `% happening at: ${Math.round(mod((nextPercentagePoint.getHours() - 0.1), 12))}:${("0" + nextPercentagePoint.getMinutes()).slice(-2)} ${morning}, ${monthNames[nextPercentagePoint.getMonth()]} ${nextPercentagePoint.getUTCDate()} `;
-  multiplier = (now / (dateEndMillis - dateStartMillis)) * 100;
+  multiplier = (now / (dateEndMillis - dateStartMillis)) * base ** 2;
 
   if (Math.floor(pm / notifyMod) * notifyMod !== Math.floor(multiplier / notifyMod) * notifyMod && pm !== 0) {
-    notify(`School is ${Math.floor(multiplier * 10000) / 10000}% over!`);
+    notify(`School is ${Math.floor(multiplier * base ** 3) / base ** 3}% over!`);
   }
 
   pm = multiplier;
-  document.getElementById("percent").innerHTML = multiplier + "%";
+  document.getElementById("percent").innerHTML = multiplier.toString(base) + "%";
   if (document.getElementById("roundTable").checked) {
     document.getElementById("roundValue").hidden = false;
-    let roundValue = getNumValue("roundValue");
-    multiplier = Math.round(multiplier / roundValue * roundValue);
+    let roundValue = getNumValue("roundValue", base);
+    multiplier = Math.round(multiplier / roundValue) * roundValue;
   } else {
     document.getElementById("roundValue").hidden = true;
   }
-  document.getElementById("multiplier").innerHTML = `x${multiplier}`
+  document.getElementById("multiplier").innerHTML = `x${multiplier.toString(base)}`
   document.getElementById("percent").width = c.windowWidth / 2;
 
   if (preview) {
-    multiplier = getNumValue("point");
+    multiplier = getNumValue("point", base);
   }
 
   drawCircle();
@@ -196,8 +199,8 @@ setInterval(() => {
   }
 }, 60000);
 
-function getNumValue(id) {
-  let v = parseFloat(document.getElementById(id).value);
+function getNumValue(id, base = 10) {
+  let v = parseFloatWithRadix(document.getElementById(id).value, base);
 
   if (isNaN(v)) {
     return 0;
@@ -216,5 +219,14 @@ const setFavicon = () => {
 Number.prototype.mod = function (n) {
   return ((this % n) + n) % n;
 };
+
+// https://stackoverflow.com/questions/8555649/second-argument-to-parsefloat-in-javascript
+function parseFloatWithRadix(s, r) {
+  r = (r||10)|0;
+  const [b,a] = ((s||'0') + '.').split('.');
+  const l1 = parseInt('1'+(a||''), r).toString(r).length;
+  return parseInt(b, r) + 
+    parseInt(a||'0', r) / parseInt('1' + Array(l1).join('0'), r);
+}
 
 setup();
