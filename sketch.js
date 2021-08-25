@@ -46,7 +46,7 @@ function setup() {
     if (e.data == "Set Favicon") {
       setFavicon()
     } else {
-      document.getElementById("title").innerHTML = "School counter | " + e.data + "%"
+      document.getElementById("title").innerHTML = "School counter | " + e.data.toString(base) + "%"
     }
   }
 
@@ -190,7 +190,7 @@ function notify(msg) {
 }
 
 setInterval(() => {
-  updater.postMessage([dateStartMillis, dateEndMillis]);
+  updater.postMessage([dateStartMillis, dateEndMillis, base]);
 }, 3000)
 
 setInterval(() => {
