@@ -69,6 +69,8 @@ function drawLoop() {
 
   base = parseInt(document.getElementById("base").value)
 
+  points = base ** 2 * 2
+
   const monthStart = getNumValue("monthStart") - 1;
   const dayStart = getNumValue("dayStart");
   const hourStart = getNumValue("hourStart");
